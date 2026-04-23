@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GuinéeAnnonces — Achetez, Vendez, Louez en Guinée</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --purple:#6A0DAD;--purple-dark:#4a0080;--purple-light:#f3eaff;
+  --orange:#ff7043;--orange-dark:#e64a19;
+  --yellow:#ffcc00;
+  --gray-50:#fafafa;--gray-100:#f5f5f5;--gray-200:#eeeeee;
+  --gray-300:#e0e0e0;--gray-400:#bdbdbd;--gray-500:#9e9e9e;
+  --gray-600:#757575;--gray-700:#616161;--gray-800:#424242;--gray-900:#212121;
+  --white:#ffffff;--radius:6px;--shadow:0 2px 8px rgba(0,0,0,0.09);
+  --border:1px solid var(--gray-200)
+}
+body{font-family:'Segoe UI',Helvetica,Arial,sans-serif;background:var(--gray-100);color:var(--gray-900);font-size:15px;line-height:1.5}
+.page{display:none}.page.active{display:block}
+a{text-decoration:none;color:inherit;cursor:pointer}
+
+nav{background:var(--purple);position:sticky;top:0;z-index:200;box-shadow:0 2px 6px rgba(0,0,0,0.18)}
+.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:14px;height:62px;padding:0 24px}
+.logo{display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0}
+.logo-text{font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.logo-text em{color:var(--yellow);font-style:normal}
+.search-wrap{flex:1;max-width:700px;display:flex;background:#fff;border-radius:var(--radius);overflow:hidden;height:42px;border:2px solid rgba(255,255,255,0.25)}
+.search-wrap input{flex:1;border:none;outline:none;padding:0 14px;font-size:14px;color:var(--gray-800)}
+.search-wrap select{border:none;border-left:var(--border);outline:none;padding:0 10px;font-size:13px;color:var(--gray-700);background:#fff;cursor:pointer;min-width:130px}
+.search-wrap button{background:var(--orange);border:none;color:#fff;padding:0 18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.search-wrap button:hover{background:var(--orange-dark)}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center;flex-shrink:0}
+.btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,0.5);color:#fff;padding:8px 14px;border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,0.1)}
+.btn-post{background:var(--orange);border:none;color:#fff;padding:9px 18px;border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.btn-post:hover{background:var(--orange-dark)}
+
+.breadcrumb{background:#fff;border-bottom:var(--border);padding:0 24px}
+.bc{max-width:1280px;margin:0 auto;padding:10px 0;font-size:13px;color:var(--gray-500);display:flex;align-items:center;gap:6px}
+.bc a{color:var(--purple);cursor:pointer}.bc a:hover{text-decoration:underline}
+.bc-sep{color:var(--gray-400)}
+
+.hero{background:linear-gradient(135deg,#4a0080 0%,var(--purple) 55%,#8e24aa 100%);padding:52px 24px;text-align:center}
+.hero h1{color:#fff;font-size:34px;font-weight:800;margin-bottom:8px;letter-spacing:-0.5px}
+.hero p{color:rgba(255,255,255,0.85);font-size:16px;margin-bottom:30px}
+.hero-search{max-width:720px;margin:0 auto;display:flex;background:#fff;border-radius:8px;overflow:hidden;height:54px;box-shadow:0 6px 24px rgba(0,0,0,0.2)}
+.hero-search input{flex:1;border:none;outline:none;padding:0 20px;font-size:15px;color:var(--gray-800)}
+.hero-search select{border:none;border-left:var(--border);outline:none;padding:0 14px;font-size:14px;color:var(--gray-700);background:#fff;cursor:pointer;min-width:155px}
+.hero-search button{background:var(--orange);border:none;color:#fff;padding:0 28px;font-size:15px;font-weight:700;cursor:pointer}
+.hero-search button:hover{background:var(--orange-dark)}
+.hero-stats{display:flex;gap:32px;justify-content:center;margin-top:24px}
+.hero-stat{color:rgba(255,255,255,0.9);font-size:14px;display:flex;align-items:center;gap:6px}
+.hero-stat strong{color:#fff;font-size:18px;font-weight:700}
+
+.section{max-width:1280px;margin:0 auto;padding:32px 24px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.sec-title{font-size:20px;font-weight:700;color:var(--gray-900);display:flex;align-items:center;gap:10px}
+.sec-title-bar{width:4px;height:22px;background:var(--purple);border-radius:2px}
+.see-all{font-size:13px;font-weight:600;color:var(--purple);cursor:pointer;display:flex;align-items:center;gap:4px}
+.see-all:hover{text-decoration:underline}
+
+/* CATEGORIES - 3D Style Icons */
+.cat-grid-olx{display:grid;grid-template-columns:repeat(9,1fr);gap:16px}
+.cat-item{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:14px 8px;border-radius:12px;transition:all 0.2s;text-align:center}
+.cat-item:hover{background:var(--gray-50);transform:translateY(-4px)}
+.cat-circle{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;transition:transform 0.2s;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.cat-item:hover .cat-circle{transform:scale(1.08) rotate(-3deg);box-shadow:0 8px 20px rgba(0,0,0,0.15)}
+.cat-emoji{font-size:56px;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.2))}
+.cat-label{font-size:12px;font-weight:700;color:var(--gray-900);line-height:1.25;min-height:30px;display:flex;align-items:center;justify-content:center;text-align:center}
+
+/* Colored backgrounds for categories */
+.bg-yellow{background:linear-gradient(135deg,#FFE57F,#FFD740)}
+.bg-blue{background:linear-gradient(135deg,#64B5F6,#4285F4)}
+.bg-mint{background:linear-gradient(135deg,#4DD0E1,#26C6DA)}
+.bg-red{background:linear-gradient(135deg,#FF8A80,#FF5252)}
+.bg-cream{background:linear-gradient(135deg,#FFF59D,#FFEE58)}
+.bg-coral{background:linear-gradient(135deg,#FFAB91,#FF7043)}
+.bg-cyan{background:linear-gradient(135deg,#B2EBF2,#80DEEA)}
+.bg-pink{background:linear-gradient(135deg,#F8BBD0,#F48FB1)}
+.bg-orange-pastel{background:linear-gradient(135deg,#FFCC80,#FFB74D)}
+.bg-navy{background:linear-gradient(135deg,#9FA8DA,#7986CB)}
+.bg-sky{background:linear-gradient(135deg,#B3E5FC,#81D4FA)}
+.bg-purple-pastel{background:linear-gradient(135deg,#CE93D8,#BA68C8)}
+.bg-lime{background:linear-gradient(135deg,#E6EE9C,#DCE775)}
+.bg-green-pastel{background:linear-gradient(135deg,#A5D6A7,#81C784)}
+.bg-indigo{background:linear-gradient(135deg,#9FA8DA,#5C6BC0)}
+
+.cat-grid-small{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.cat-card-small{background:#fff;border-radius:var(--radius);border:var(--border);padding:18px 12px;text-align:center;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:10px}
+.cat-card-small:hover{border-color:var(--purple);box-shadow:var(--shadow);transform:translateY(-2px)}
+.cat-card-small .cat-circle{width:70px;height:70px;margin-bottom:4px}
+.cat-card-small .cat-emoji{font-size:40px}
+.cat-card-small .cat-name{font-size:13px;font-weight:600;color:var(--gray-900)}
+.cat-card-small .cat-count{font-size:12px;color:var(--gray-500);margin-top:2px}
+
+.ads-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ad-card{background:#fff;border-radius:var(--radius);border:var(--border);overflow:hidden;cursor:pointer;transition:all 0.15s}
+.ad-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.10);border-color:var(--gray-300);transform:translateY(-2px)}
+.ad-img-wrap{position:relative;overflow:hidden}
+.ad-img{width:100%;height:178px;object-fit:cover;display:block;transition:transform 0.2s}
+.ad-card:hover .ad-img{transform:scale(1.03)}
+.ad-badge{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px}
+.badge-top{background:var(--yellow);color:var(--gray-900)}
+.badge-urgent{background:var(--orange);color:#fff}
+.ad-fav{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.95);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:var(--border)}
+.ad-fav:hover{background:#fff}
+.ad-body{padding:12px}
+.ad-price{font-size:17px;font-weight:700;color:var(--gray-900)}
+.ad-title{font-size:13px;color:var(--gray-600);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ad-meta{font-size:12px;color:var(--gray-500);margin-top:8px;display:flex;gap:10px;align-items:center}
+
+.cat-hero{background:#fff;border-bottom:var(--border)}
+.cat-hero-inner{max-width:1280px;margin:0 auto;padding:20px 24px}
+.cat-hero-title{font-size:26px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:14px}
+.cat-hero-circle{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(0,0,0,0.1)}
+.cat-hero-circle .cat-emoji{font-size:30px}
+.cat-hero-count{font-size:14px;color:var(--gray-500)}
+.subcats{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.subcat{background:var(--gray-100);color:var(--gray-800);padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid var(--gray-200);transition:all 0.12s}
+.subcat:hover,.subcat.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+.listings-layout{max-width:1280px;margin:0 auto;padding:24px 24px;display:grid;grid-template-columns:268px 1fr;gap:24px}
+.filters{background:#fff;border-radius:var(--radius);border:var(--border);align-self:start;position:sticky;top:70px;overflow:hidden}
+.filters-header{padding:16px 20px;border-bottom:var(--border);display:flex;align-items:center;justify-content:space-between}
+.filters-title{font-size:15px;font-weight:700;color:var(--gray-900)}
+.filters-reset{font-size:12px;color:var(--purple);cursor:pointer;font-weight:500}
+.filters-reset:hover{text-decoration:underline}
+.filter-sec{padding:16px 20px;border-bottom:var(--border)}
+.filter-sec:last-child{border-bottom:none}
+.filter-sec-title{font-size:13px;font-weight:700;color:var(--gray-800);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.3px}
+.filter-opt{display:flex;align-items:center;gap:9px;margin-bottom:9px;cursor:pointer;font-size:14px;color:var(--gray-700)}
+.filter-opt input{accent-color:var(--purple);width:15px;height:15px;cursor:pointer}
+.filter-opt-count{margin-left:auto;font-size:12px;color:var(--gray-400)}
+.price-row{display:flex;gap:8px}
+.price-row input{flex:1;border:var(--border);border-radius:var(--radius);padding:8px 10px;font-size:13px;outline:none;color:var(--gray-800)}
+.price-row input:focus{border-color:var(--purple)}
+.filter-apply{width:100%;background:var(--purple);color:#fff;border:none;padding:10px;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;margin-top:12px}
+.filter-apply:hover{background:var(--purple-dark)}
+
+.listings-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.listings-count{font-size:14px;color:var(--gray-700)}
+.listings-count strong{color:var(--gray-900)}
+.sort-sel{border:var(--border);border-radius:var(--radius);padding:8px 12px;font-size:13px;outline:none;cursor:pointer;color:var(--gray-700);background:#fff}
+.ads-list{display:grid;gap:12px}
+.list-card{background:#fff;border-radius:var(--radius);border:var(--border);display:flex;overflow:hidden;cursor:pointer;transition:all 0.15s}
+.list-card:hover{box-shadow:var(--shadow);border-color:var(--gray-300)}
+.list-img{width:220px;min-width:220px;height:165px;object-fit:cover;display:block}
+.list-body{padding:16px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.list-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;margin-bottom:6px}
+.list-title{font-size:16px;font-weight:700;color:var(--gray-900);margin-bottom:6px;line-height:1.3}
+.list-desc{font-size:13px;color:var(--gray-500);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.list-price{font-size:21px;font-weight:800;color:var(--gray-900);margin-top:10px}
+.list-meta{display:flex;gap:16px;font-size:12px;color:var(--gray-500);margin-top:7px;align-items:center}
+.list-meta span{display:flex;align-items:center;gap:4px}
+.pagination{display:flex;gap:6px;justify-content:center;margin-top:28px}
+.pg-btn{width:38px;height:38px;border-radius:var(--radius);border:var(--border);background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--gray-700);transition:all 0.1s}
+.pg-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.pg-btn:hover:not(.active){background:var(--gray-100);border-color:var(--gray-300)}
+
+.detail-layout{max-width:1280px;margin:0 auto;padding:24px 24px;display:grid;grid-template-columns:1fr 348px;gap:28px;align-items:start}
+.gallery{background:#fff;border-radius:var(--radius);border:var(--border);overflow:hidden;margin-bottom:20px}
+.gallery-main{width:100%;height:430px;object-fit:cover;display:block}
+.gallery-thumbs{display:flex;gap:8px;padding:12px;overflow-x:auto}
+.g-thumb{width:82px;min-width:82px;height:62px;object-fit:cover;border-radius:4px;border:2px solid transparent;cursor:pointer;display:block;transition:all 0.1s}
+.g-thumb.active,.g-thumb:hover{border-color:var(--purple)}
+.detail-card{background:#fff;border-radius:var(--radius);border:var(--border);padding:22px;margin-bottom:16px}
+.detail-price{font-size:30px;font-weight:800;color:var(--gray-900)}
+.detail-price-sub{font-size:15px;font-weight:400;color:var(--gray-500)}
+.detail-title{font-size:21px;font-weight:700;color:var(--gray-900);margin:8px 0 14px;line-height:1.3}
+.detail-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--gray-500);padding-bottom:16px;border-bottom:var(--border);margin-bottom:18px}
+.detail-meta span{display:flex;align-items:center;gap:5px}
+.detail-sec-title{font-size:16px;font-weight:700;color:var(--gray-900);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.feature{display:flex;flex-direction:column;gap:2px;background:var(--gray-50);border-radius:var(--radius);padding:10px 12px}
+.feature-label{font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.3px}
+.feature-val{font-size:14px;font-weight:600;color:var(--gray-900)}
+.desc-text{font-size:14px;color:var(--gray-700);line-height:1.75}
+.equip-tags{display:flex;flex-wrap:wrap;gap:8px}
+.equip-tag{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;border-radius:20px;padding:5px 13px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:5px}
+.map-placeholder{background:var(--gray-50);border-radius:var(--radius);height:168px;display:flex;align-items:center;justify-content:center;border:var(--border);flex-direction:column;gap:8px;margin-top:12px}
+.seller-card{background:#fff;border-radius:var(--radius);border:var(--border);padding:22px;margin-bottom:16px;position:sticky;top:70px}
+.seller-price-big{font-size:26px;font-weight:800;margin-bottom:2px}
+.seller-price-note{font-size:13px;color:var(--gray-500);margin-bottom:18px}
+.btn-call{width:100%;background:var(--purple);color:#fff;border:none;padding:14px;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-call:hover{background:var(--purple-dark)}
+.btn-msg{width:100%;background:#fff;color:var(--purple);border:2px solid var(--purple);padding:12px;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-msg:hover{background:var(--purple-light)}
+.divider{height:1px;background:var(--gray-200);margin:16px 0}
+.seller-info{display:flex;gap:12px;align-items:center}
+.seller-av{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid var(--gray-200)}
+.seller-name{font-size:15px;font-weight:700}
+.seller-since{font-size:12px;color:var(--gray-500);margin-top:2px}
+.seller-rating{font-size:12px;color:#f57c00;margin-top:3px;font-weight:600}
+.seller-stats{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.seller-stat-row{display:flex;justify-content:space-between;font-size:13px}
+.seller-stat-label{color:var(--gray-500)}
+.seller-stat-val{font-weight:600;color:var(--gray-900)}
+.seller-stat-val.green{color:#2e7d32}
+.btn-profile{width:100%;margin-top:14px;background:transparent;border:var(--border);border-radius:var(--radius);padding:9px;font-size:13px;cursor:pointer;color:var(--gray-700);transition:all 0.1s}
+.btn-profile:hover{background:var(--gray-100)}
+.safety{background:#fffbe6;border:1px solid #ffe082;border-radius:var(--radius);padding:14px;margin-top:12px}
+.safety-title{font-size:13px;font-weight:700;color:#6d4c00;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.safety-text{font-size:12px;color:#795a0a;line-height:1.55}
+
+.promo{background:linear-gradient(90deg,var(--purple),#8e24aa);border-radius:var(--radius);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.promo h3{color:#fff;font-size:18px;font-weight:700}
+.promo p{color:rgba(255,255,255,0.82);font-size:13px;margin-top:4px}
+.promo-btn{background:var(--yellow);color:#4a0080;border:none;padding:11px 22px;border-radius:var(--radius);font-weight:700;cursor:pointer;font-size:14px;white-space:nowrap}
+.promo-btn:hover{background:#e6b800}
+
+.post-header{background:#fff;border-bottom:var(--border);padding:0 24px}
+.post-header-inner{max-width:860px;margin:0 auto;padding:22px 0}
+.post-title{font-size:24px;font-weight:800;color:var(--gray-900);margin-bottom:6px}
+.post-subtitle{font-size:14px;color:var(--gray-500)}
+.steps-bar{display:flex;gap:0;margin-top:20px}
+.step-item{display:flex;align-items:center;gap:10px;flex:1}
+.step-circle{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;transition:all 0.2s}
+.step-circle.done{background:#2e7d32;color:#fff}
+.step-circle.active{background:var(--purple);color:#fff}
+.step-circle.inactive{background:var(--gray-200);color:var(--gray-500)}
+.step-label{font-size:13px;font-weight:500}
+.step-label.active{color:var(--purple);font-weight:700}
+.step-label.done{color:#2e7d32}
+.step-label.inactive{color:var(--gray-500)}
+.step-line{height:2px;flex:1;background:var(--gray-200);margin:0 8px}
+.step-line.done{background:#2e7d32}
+.post-body{max-width:860px;margin:0 auto;padding:28px 24px}
+.post-step{display:none}.post-step.active{display:block}
+
+.cat-select-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cat-select-item{background:#fff;border:var(--border);border-radius:var(--radius);padding:14px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:14px}
+.cat-select-item:hover{border-color:var(--purple);background:var(--purple-light)}
+.cat-select-item.selected{border-color:var(--purple);background:var(--purple-light);border-width:2px}
+.cat-select-circle{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.cat-select-circle .cat-emoji{font-size:34px}
+.cat-select-name{font-size:14px;font-weight:700;color:var(--gray-900)}
+.cat-select-count{font-size:12px;color:var(--gray-500);margin-top:2px}
+.subcats-select{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.subcat-select-item{background:#fff;border:var(--border);border-radius:var(--radius);padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;color:var(--gray-800);transition:all 0.12s;display:flex;align-items:center;gap:8px}
+.subcat-select-item:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
+.subcat-selected-display{background:var(--purple-light);border:1.5px solid var(--purple);border-radius:var(--radius);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.subcat-selected-display span{font-size:14px;font-weight:600;color:var(--purple);display:flex;align-items:center;gap:8px}
+.subcat-selected-display button{background:transparent;border:none;color:var(--gray-500);cursor:pointer;font-size:13px}
+
+.form-group{margin-bottom:22px}
+.form-label{font-size:13px;font-weight:700;color:var(--gray-800);margin-bottom:7px;display:block;text-transform:uppercase;letter-spacing:0.3px}
+.form-label span{color:var(--orange)}
+.form-input{width:100%;border:var(--border);border-radius:var(--radius);padding:11px 14px;font-size:14px;outline:none;color:var(--gray-800);background:#fff;transition:border 0.15s}
+.form-input:focus{border-color:var(--purple)}
+.form-input::placeholder{color:var(--gray-400)}
+.form-textarea{width:100%;border:var(--border);border-radius:var(--radius);padding:11px 14px;font-size:14px;outline:none;color:var(--gray-800);background:#fff;resize:vertical;min-height:140px;font-family:inherit;transition:border 0.15s}
+.form-textarea:focus{border-color:var(--purple)}
+.form-select{width:100%;border:var(--border);border-radius:var(--radius);padding:11px 14px;font-size:14px;outline:none;color:var(--gray-800);background:#fff;cursor:pointer}
+.form-select:focus{border-color:var(--purple)}
+.form-hint{font-size:12px;color:var(--gray-500);margin-top:5px}
+.char-count{font-size:12px;color:var(--gray-400);text-align:right;margin-top:4px}
+.price-wrap{display:flex;align-items:center;gap:0;border:var(--border);border-radius:var(--radius);overflow:hidden;background:#fff;transition:border 0.15s}
+.price-wrap:focus-within{border-color:var(--purple)}
+.price-currency{background:var(--gray-50);padding:11px 14px;font-size:14px;font-weight:600;color:var(--gray-700);border-right:var(--border);white-space:nowrap}
+.price-input{flex:1;border:none;outline:none;padding:11px 14px;font-size:14px;color:var(--gray-800);background:transparent}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.condition-options{display:flex;gap:10px;flex-wrap:wrap}
+.condition-opt{border:var(--border);border-radius:var(--radius);padding:10px 18px;cursor:pointer;font-size:14px;color:var(--gray-700);transition:all 0.12s;display:flex;align-items:center;gap:7px}
+.condition-opt:hover{border-color:var(--purple);color:var(--purple)}
+.condition-opt.selected{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+.photo-upload-area{border:2px dashed var(--gray-300);border-radius:var(--radius);padding:36px 24px;text-align:center;cursor:pointer;transition:all 0.15s;background:var(--gray-50)}
+.photo-upload-area:hover{border-color:var(--purple);background:var(--purple-light)}
+.upload-icon{width:52px;height:52px;margin:0 auto 14px;background:var(--gray-200);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.upload-title{font-size:15px;font-weight:600;color:var(--gray-800);margin-bottom:6px}
+.upload-sub{font-size:13px;color:var(--gray-500)}
+.photos-preview{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.photo-preview-item{position:relative;width:100px;height:100px}
+.photo-preview-img{width:100px;height:100px;object-fit:cover;border-radius:var(--radius);border:var(--border)}
+.photo-preview-remove{position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:var(--orange);border:2px solid #fff;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.photo-main-badge{position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,0.65);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px}
+.photo-add-btn{width:100px;height:100px;border:2px dashed var(--gray-300);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:var(--gray-50);gap:4px;transition:all 0.12s}
+.photo-add-btn:hover{border-color:var(--purple);background:var(--purple-light)}
+.photo-add-btn span{font-size:11px;color:var(--gray-500)}
+
+.contact-card{background:var(--gray-50);border:var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.contact-card-title{font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.plan-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.plan-card{border:var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;background:#fff;transition:all 0.15s;position:relative}
+.plan-card:hover{border-color:var(--purple)}
+.plan-card.selected{border-color:var(--purple);border-width:2px}
+.plan-card.recommended{border-color:var(--yellow);border-width:2px}
+.plan-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--yellow);color:var(--gray-900);font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;white-space:nowrap}
+.plan-name{font-size:15px;font-weight:700;margin-bottom:8px}
+.plan-price{font-size:22px;font-weight:800;color:var(--purple);margin-bottom:12px}
+.plan-price span{font-size:14px;font-weight:400;color:var(--gray-500)}
+.plan-feature{font-size:13px;color:var(--gray-600);margin-bottom:6px;display:flex;align-items:flex-start;gap:7px;line-height:1.4}
+
+.review-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;background:var(--gray-50);border:var(--border);border-radius:var(--radius);padding:20px}
+.review-img{width:200px;height:148px;object-fit:cover;border-radius:var(--radius)}
+.review-title{font-size:18px;font-weight:700;margin-bottom:8px}
+.review-price{font-size:22px;font-weight:800;color:var(--purple);margin-bottom:10px}
+.review-meta{font-size:13px;color:var(--gray-500);display:flex;flex-direction:column;gap:5px}
+.review-meta span{display:flex;align-items:center;gap:6px}
+
+.form-actions{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:24px;border-top:var(--border)}
+.btn-back{background:transparent;border:var(--border);color:var(--gray-700);padding:12px 24px;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px}
+.btn-back:hover{background:var(--gray-100)}
+.btn-next{background:var(--purple);color:#fff;border:none;padding:13px 32px;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px}
+.btn-next:hover{background:var(--purple-dark)}
+.btn-publish{background:#2e7d32;color:#fff;border:none;padding:13px 32px;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px}
+.btn-publish:hover{background:#1b5e20}
+
+.success-wrap{text-align:center;padding:52px 24px}
+.success-icon{width:80px;height:80px;background:#e8f5e9;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.success-title{font-size:26px;font-weight:800;color:var(--gray-900);margin-bottom:10px}
+.success-sub{font-size:15px;color:var(--gray-500);margin-bottom:28px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.6}
+.success-ref{background:var(--gray-100);border:var(--border);border-radius:var(--radius);padding:12px 20px;display:inline-block;font-size:14px;color:var(--gray-700);margin-bottom:28px}
+.success-ref strong{color:var(--gray-900)}
+.success-actions{display:flex;gap:12px;justify-content:center}
+.btn-green{background:#2e7d32;color:#fff;border:none;padding:13px 28px;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer}
+.btn-purple-outline{background:transparent;border:2px solid var(--purple);color:var(--purple);padding:12px 28px;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer}
+
+footer{background:#1a1a1a;color:#9e9e9e;padding:42px 24px 24px;margin-top:48px}
+.footer-inner{max-width:1280px;margin:0 auto}
+.footer-top{display:flex;gap:8px;align-items:center;margin-bottom:20px}
+.footer-logo-text{color:#fff;font-size:18px;font-weight:800}
+.footer-logo-text em{color:var(--yellow);font-style:normal}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-bottom:32px;border-top:1px solid #333;padding-top:28px}
+.footer-col h4{color:#fff;font-size:13px;font-weight:700;margin-bottom:14px;text-transform:uppercase;letter-spacing:0.4px}
+.footer-col a{display:block;color:#9e9e9e;font-size:13px;margin-bottom:9px;cursor:pointer;transition:color 0.1s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid #333;padding-top:20px;display:flex;justify-content:space-between;font-size:12px}
+
+.chip{background:#fff;border:var(--border);border-radius:20px;padding:7px 15px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin:4px}
+.chip:hover{border-color:var(--purple);color:var(--purple)}
+
+@media(max-width:1200px){.cat-grid-olx{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:900px){
+  .ads-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-grid-olx{grid-template-columns:repeat(4,1fr)}
+  .cat-grid-small{grid-template-columns:repeat(3,1fr)}
+  .listings-layout{grid-template-columns:1fr}
+  .filters{position:static}
+  .detail-layout{grid-template-columns:1fr}
+  .seller-card{position:static}
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+  .plan-cards{grid-template-columns:1fr}
+  .cat-select-grid{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+}
+
+/* ============ TABLETTES / MOBILES ≤ 720px ============ */
+@media(max-width:720px){
+  body{font-size:14px}
+
+  /* NAV : logo + boutons en haut, recherche pleine largeur en dessous */
+  nav{position:sticky;top:0}
+  .nav-inner{height:auto;min-height:56px;padding:10px 12px;flex-wrap:wrap;gap:8px;row-gap:10px}
+  .logo-text{font-size:18px}
+  .search-wrap{order:3;flex-basis:100%;max-width:none;height:40px;border-width:1px}
+  .search-wrap select{display:none}
+  .search-wrap input{font-size:14px;padding:0 12px}
+  .search-wrap button{padding:0 14px}
+  .nav-right{margin-left:auto;gap:6px}
+  .btn-ghost{padding:7px 10px;font-size:12px}
+  .btn-ghost svg{width:14px;height:14px}
+  .btn-post{padding:8px 12px;font-size:12px}
+
+  /* BREADCRUMB */
+  .breadcrumb{padding:0 12px}
+  .bc{padding:8px 0;font-size:12px;flex-wrap:wrap}
+
+  /* HERO */
+  .hero{padding:32px 16px 28px}
+  .hero h1{font-size:22px;line-height:1.25;margin-bottom:6px}
+  .hero p{font-size:13px;margin-bottom:18px;padding:0 4px}
+  .hero-search{flex-direction:column;height:auto;border-radius:8px;padding:6px;gap:4px}
+  .hero-search input,.hero-search select,.hero-search button{width:100%;height:44px;border-left:none;border-radius:6px;padding:0 14px;font-size:14px}
+  .hero-search select{border-top:1px solid var(--gray-200)}
+  .hero-search button{padding:0;font-weight:700}
+  .hero-stats{flex-direction:column;gap:8px;margin-top:18px;align-items:center}
+  .hero-stat{font-size:13px}
+  .hero-stat strong{font-size:16px}
+
+  /* SECTIONS */
+  .section{padding:22px 12px}
+  .sec-head{margin-bottom:14px}
+  .sec-title{font-size:16px;gap:8px}
+  .sec-title-bar{height:18px}
+  .see-all{font-size:12px}
+
+  /* CATÉGORIES — 3 colonnes + cercles plus petits */
+  .cat-grid-olx{grid-template-columns:repeat(3,1fr);gap:8px}
+  .cat-item{padding:10px 4px}
+  .cat-circle{width:64px;height:64px;margin-bottom:8px}
+  .cat-emoji{font-size:36px}
+  .cat-label{font-size:11px;min-height:28px}
+  .cat-grid-small{grid-template-columns:repeat(2,1fr);gap:10px}
+  .cat-card-small{padding:14px 10px}
+  .cat-card-small .cat-circle{width:58px;height:58px}
+  .cat-card-small .cat-emoji{font-size:32px}
+  .cat-card-small .cat-name{font-size:12px}
+  .cat-card-small .cat-count{font-size:11px}
+
+  /* GRID D'ANNONCES */
+  .ads-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .ad-img{height:130px}
+  .ad-body{padding:10px}
+  .ad-price{font-size:14px}
+  .ad-title{font-size:12px}
+  .ad-meta{font-size:11px;gap:6px;margin-top:6px}
+  .ad-badge{font-size:10px;padding:2px 6px;top:8px;left:8px}
+  .ad-fav{width:28px;height:28px;top:8px;right:8px}
+  .ad-fav svg{width:14px;height:14px}
+
+  /* HUB CATÉGORIE */
+  .cat-hero-inner{padding:14px 12px}
+  .cat-hero-title{font-size:20px;gap:10px}
+  .cat-hero-circle{width:44px;height:44px}
+  .cat-hero-circle .cat-emoji{font-size:26px}
+  .cat-hero-count{font-size:13px}
+  .subcats{gap:6px;margin-top:12px}
+  .subcat{padding:6px 14px;font-size:12px}
+
+  /* LISTINGS */
+  .listings-layout{padding:16px 12px;gap:14px}
+  .filters-header{padding:14px}
+  .filter-sec{padding:14px}
+  .list-card{flex-direction:column}
+  .list-img{width:100%;min-width:0;height:200px}
+  .list-body{padding:14px}
+  .list-title{font-size:15px}
+  .list-desc{font-size:12px}
+  .list-price{font-size:18px;margin-top:8px}
+  .list-meta{flex-wrap:wrap;gap:10px;font-size:11px}
+  .listings-head{flex-direction:column;align-items:flex-start;gap:8px}
+  .sort-sel{width:100%}
+
+  /* DÉTAIL ANNONCE */
+  .detail-layout{padding:16px 12px;gap:14px}
+  .gallery-main{height:260px}
+  .gallery-thumbs{padding:8px}
+  .g-thumb{width:64px;min-width:64px;height:48px}
+  .detail-card{padding:16px}
+  .detail-price{font-size:24px}
+  .detail-title{font-size:17px;margin:6px 0 12px}
+  .detail-meta{flex-wrap:wrap;gap:8px;font-size:12px}
+  .detail-sec-title{font-size:14px}
+  .features{grid-template-columns:1fr}
+  .seller-card{padding:16px}
+  .seller-price-big{font-size:22px}
+  .btn-call,.btn-msg{padding:12px;font-size:14px}
+  .map-placeholder{height:140px}
+
+  /* PROMO */
+  .promo{flex-direction:column;text-align:center;gap:14px;padding:18px 16px;margin-bottom:20px}
+  .promo h3{font-size:16px}
+  .promo p{font-size:12px}
+  .promo-btn{padding:10px 18px;font-size:13px}
+
+  /* DÉPÔT D'ANNONCE */
+  .post-header{padding:0 12px}
+  .post-header-inner{padding:16px 0}
+  .post-title{font-size:19px}
+  .post-subtitle{font-size:13px}
+  .steps-bar{flex-wrap:wrap;gap:6px;row-gap:10px;margin-top:16px}
+  .step-item{flex:none;flex-basis:calc(50% - 3px);gap:6px}
+  .step-line{display:none}
+  .step-label{font-size:12px}
+  .post-body{padding:20px 12px}
+  .cat-select-grid{grid-template-columns:1fr;gap:10px}
+  .cat-select-item{padding:12px;gap:12px}
+  .cat-select-circle{width:52px;height:52px}
+  .cat-select-circle .cat-emoji{font-size:28px}
+  .subcats-select{grid-template-columns:1fr;gap:8px}
+  .form-group{margin-bottom:18px}
+  .form-label{font-size:12px}
+  .form-input,.form-textarea,.form-select{padding:11px 12px;font-size:14px}
+  .condition-options{flex-direction:column;gap:8px}
+  .condition-opt{width:100%;justify-content:center}
+  .plan-cards{grid-template-columns:1fr;gap:12px}
+  .review-grid{grid-template-columns:1fr;padding:14px;gap:14px}
+  .review-img{width:100%;height:180px}
+  .review-title{font-size:16px}
+  .review-price{font-size:19px}
+  .photo-upload-area{padding:26px 16px}
+  .photos-preview{gap:8px}
+  .photo-preview-item,.photo-preview-img,.photo-add-btn{width:86px;height:86px}
+
+  .form-actions{flex-direction:column-reverse;gap:10px;align-items:stretch}
+  .btn-back,.btn-next,.btn-publish{width:100%;justify-content:center;padding:13px 20px}
+
+  .success-wrap{padding:36px 16px}
+  .success-icon{width:64px;height:64px}
+  .success-title{font-size:21px}
+  .success-sub{font-size:14px}
+  .success-actions{flex-direction:column;gap:10px}
+  .btn-green,.btn-purple-outline{width:100%}
+
+  /* FOOTER */
+  footer{padding:28px 16px 20px;margin-top:32px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:20px;padding-top:20px;margin-bottom:20px}
+  .footer-col h4{font-size:12px;margin-bottom:10px}
+  .footer-col a{font-size:12px;margin-bottom:7px}
+  .footer-bottom{flex-direction:column;gap:6px;text-align:center;font-size:11px}
+}
+
+/* ============ TÉLÉPHONES ≤ 480px ============ */
+@media(max-width:480px){
+  .logo-text{font-size:16px}
+  .btn-ghost{padding:6px 8px;font-size:0;gap:0;border-width:1px}
+  .btn-ghost svg{width:16px;height:16px}
+  .btn-post{padding:7px 10px;font-size:12px}
+  .btn-post svg{width:13px;height:13px}
+
+  .hero{padding:26px 14px 22px}
+  .hero h1{font-size:20px}
+  .hero p{font-size:12px}
+
+  .cat-grid-olx{grid-template-columns:repeat(3,1fr)}
+  .cat-circle{width:58px;height:58px;margin-bottom:6px}
+  .cat-emoji{font-size:32px}
+
+  .ads-grid{grid-template-columns:1fr;gap:12px}
+  .ad-img{height:200px}
+  .ad-price{font-size:16px}
+  .ad-title{font-size:13px;white-space:normal}
+
+  .cat-grid-small{grid-template-columns:repeat(2,1fr)}
+
+  .gallery-main{height:220px}
+  .footer-grid{grid-template-columns:1fr}
+
+  .step-label{display:none}
+  .step-item{flex:1 1 auto;flex-basis:auto}
+  .steps-bar{justify-content:space-between;flex-wrap:nowrap}
+  .step-line{display:block;height:2px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="goTo('home')">
+      <div class="logo-text">Guinée<em>Annonces</em></div>
+    </div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Que recherchez-vous ?">
+      <select><option>Toute la Guinée</option><option>Conakry</option><option>Kindia</option><option>Kankan</option><option>Labé</option><option>Nzérékoré</option></select>
+      <button>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2.2"/><path d="M20 20L16.65 16.65" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="nav-right">
+      <button class="btn-ghost">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#fff" stroke-width="2"/></svg>
+        Connexion
+      </button>
+      <button class="btn-post" onclick="goTo('post')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+        Déposer une annonce
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HOME -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <h1>Achetez, Vendez & Louez en Guinée</h1>
+    <p>La première plateforme d'annonces entre particuliers de la République de Guinée</p>
+    <div class="hero-search">
+      <input type="text" placeholder="Voiture, Appartement, iPhone...">
+      <select><option>Toute la Guinée</option><option>Conakry</option><option>Kindia</option><option>Kankan</option><option>Labé</option></select>
+      <button>Rechercher</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>22 400</strong> annonces actives</div>
+      <div class="hero-stat"><strong>18 000+</strong> utilisateurs</div>
+      <div class="hero-stat">Transactions sécurisées</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title"><div class="sec-title-bar"></div>Catégories principales</div>
+      <div class="see-all">Toutes les catégories <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="cat-grid-olx">
+      <div class="cat-item" onclick="goTo('voitures')">
+        <div class="cat-circle bg-yellow"><span class="cat-emoji">🚗</span></div>
+        <div class="cat-label">Voitures,<br>motos et bateaux</div>
+      </div>
+      <div class="cat-item" onclick="goTo('immo')">
+        <div class="cat-circle bg-blue"><span class="cat-emoji">🔑</span></div>
+        <div class="cat-label">Immobilier</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-circle bg-mint"><span class="cat-emoji">🍼</span></div>
+        <div class="cat-label">Bébé et Enfant</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-circle bg-red"><span class="cat-emoji">🎸</span></div>
+        <div class="cat-label">Loisirs</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-circle bg-cream"><span class="cat-emoji">📱</span></div>
+        <div class="cat-label">Téléphones,<br>Tablettes</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-circle bg-coral"><span class="cat-emoji">🚜</span></div>
+        <div class="cat-label">Agriculture</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-circle bg-cyan"><span class="cat-emoji">🐶</span></div>
+        <div class="cat-label">Animaux</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-circle bg-pink"><span class="cat-emoji">⚽</span></div>
+        <div class="cat-label">Sport</div>
+      </div>
+      <div class="cat-item">
+        <div class="cat-circle bg-yellow"><span class="cat-emoji">👗</span></div>
+        <div class="cat-label">Mode</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="promo">
+      <div>
+        <h3>Publiez votre annonce gratuitement</h3>
+        <p>Rejoignez 18 000 Guinéens qui achètent et vendent chaque jour sur GuinéeAnnonces</p>
+      </div>
+      <button class="promo-btn" onclick="goTo('post')">Déposer une annonce</button>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="sec-head">
+      <div class="sec-title"><div class="sec-title-bar"></div>Immobilier — Annonces récentes</div>
+      <div class="see-all" onclick="goTo('immo')">Voir tout <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="ads-grid">
+      <div class="ad-card" onclick="goTo('annonce')">
+        <div class="ad-img-wrap">
+          <img class="ad-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="">
+          <div class="ad-badge badge-top">TOP</div>
+          <div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-price">3 500 000 GNF / mois</div>
+          <div class="ad-title">Appartement 3 chambres — Kaloum</div>
+          <div class="ad-meta"><span><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="var(--gray-500)" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="var(--gray-500)" stroke-width="2"/></svg>Conakry</span><span>Aujourd'hui</span></div>
+        </div>
+      </div>
+      <div class="ad-card" onclick="goTo('annonce')">
+        <div class="ad-img-wrap">
+          <img class="ad-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80" alt="">
+          <div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-price">95 000 000 GNF</div>
+          <div class="ad-title">Villa moderne 5 pièces — Ratoma</div>
+          <div class="ad-meta"><span>Conakry</span><span>Hier</span></div>
+        </div>
+      </div>
+      <div class="ad-card" onclick="goTo('annonce')">
+        <div class="ad-img-wrap">
+          <img class="ad-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80" alt="">
+          <div class="ad-badge badge-urgent">URGENT</div>
+          <div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-price">1 800 000 GNF / mois</div>
+          <div class="ad-title">Studio meublé centre-ville</div>
+          <div class="ad-meta"><span>Dixinn</span><span>2 jours</span></div>
+        </div>
+      </div>
+      <div class="ad-card" onclick="goTo('annonce')">
+        <div class="ad-img-wrap">
+          <img class="ad-img" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&q=80" alt="">
+          <div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-price">45 000 000 GNF</div>
+          <div class="ad-title">Maison 4 chambres avec jardin — Matoto</div>
+          <div class="ad-meta"><span>Matoto</span><span>3 jours</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="sec-head">
+      <div class="sec-title"><div class="sec-title-bar"></div>Véhicules — Annonces récentes</div>
+      <div class="see-all">Voir tout <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="ads-grid">
+      <div class="ad-card">
+        <div class="ad-img-wrap">
+          <img class="ad-img" src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400&q=80" alt="">
+          <div class="ad-badge badge-top">TOP</div>
+          <div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-price">11169 522 000 GNF</div>
+          <div class="ad-title">Nissan GTR — Liberty Walk</div>
+          <div class="ad-meta"><span>Conakry</span><span>Aujourd'hui</span></div>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-img-wrap">
+          <img class="ad-img" src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400&q=80" alt="">
+          <div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-price">800 500 000 GNF</div>
+          <div class="ad-title">Ford Explorer — Hybride</div>
+          <div class="ad-meta"><span>Kindia</span><span>Hier</span></div>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-img-wrap">
+          <img class="ad-img" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&q=80" alt="">
+          <div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-price">402 102 792 GNF</div>
+          <div class="ad-title">Chevrolet Camaro — 2016, faible kilométrage</div>
+          <div class="ad-meta"><span>Conakry</span><span>2 jours</span></div>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-img-wrap">
+          <img class="ad-img" src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400&q=80" alt="">
+          <div class="ad-badge badge-urgent">URGENT</div>
+          <div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-price">111 111 000 000 GNF</div>
+          <div class="ad-title">Mustang Shelby — Pack Carbone</div>
+          <div class="ad-meta"><span>Conakry</span><span>4 jours</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-logo-text">Guinée<em>Annonces</em></div>
+        <span style="font-size:13px;margin-left:8px">— La plateforme d'annonces de la République de Guinée</span>
+      </div>
+      <div class="footer-grid">
+        <div class="footer-col"><h4>Catégories</h4><a>Immobilier</a><a>Véhicules</a><a>Électronique</a><a>Mode & Beauté</a><a>Emploi</a></div>
+        <div class="footer-col"><h4>Assistance</h4><a>Aide & FAQ</a><a>Nous contacter</a><a>Signaler une annonce</a><a>Conseils de sécurité</a></div>
+        <div class="footer-col"><h4>Villes</h4><a>Conakry</a><a>Kindia</a><a>Kankan</a><a>Labé</a><a>Nzérékoré</a></div>
+        <div class="footer-col"><h4>Légal</h4><a>Conditions d'utilisation</a><a>Politique de confidentialité</a><a>Mentions légales</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 GuinéeAnnonces. Tous droits réservés.</span><span>Conakry, République de Guinée</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- PAGE IMMO -->
+<div id="page-immo" class="page">
+  <div class="breadcrumb"><div class="bc"><a onclick="goTo('home')">Accueil</a><span class="bc-sep">›</span><strong>Immobilier</strong></div></div>
+  <div class="cat-hero">
+    <div class="cat-hero-inner">
+      <div class="cat-hero-title">
+        <div class="cat-hero-circle bg-blue"><span class="cat-emoji">🔑</span></div>
+        Immobilier
+      </div>
+      <div class="cat-hero-count">4 821 annonces en Guinée</div>
+      <div class="subcats">
+        <div class="subcat active" onclick="goTo('apparts')">Appartements</div>
+        <div class="subcat" onclick="goTo('apparts')">Villas & Maisons</div>
+        <div class="subcat" onclick="goTo('apparts')">Terrains & Parcelles</div>
+        <div class="subcat" onclick="goTo('apparts')">Colocation</div>
+        <div class="subcat" onclick="goTo('apparts')">Locaux commerciaux</div>
+        <div class="subcat" onclick="goTo('apparts')">Bureaux</div>
+        <div class="subcat" onclick="goTo('apparts')">Entrepôts</div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-head"><div class="sec-title"><div class="sec-title-bar"></div>Sous-catégories</div></div>
+    <div class="cat-grid-small" style="grid-template-columns:repeat(4,1fr);margin-bottom:32px">
+      <div class="cat-card-small" onclick="goTo('apparts')">
+        <div class="cat-circle bg-blue"><span class="cat-emoji">🏢</span></div>
+        <div><div class="cat-name">Appartements</div><div class="cat-count">1 842 annonces</div></div>
+      </div>
+      <div class="cat-card-small" onclick="goTo('apparts')">
+        <div class="cat-circle bg-navy"><span class="cat-emoji">🏡</span></div>
+        <div><div class="cat-name">Villas & Maisons</div><div class="cat-count">1 204 annonces</div></div>
+      </div>
+      <div class="cat-card-small" onclick="goTo('apparts')">
+        <div class="cat-circle bg-lime"><span class="cat-emoji">🌳</span></div>
+        <div><div class="cat-name">Terrains</div><div class="cat-count">876 annonces</div></div>
+      </div>
+      <div class="cat-card-small" onclick="goTo('apparts')">
+        <div class="cat-circle bg-pink"><span class="cat-emoji">🤝</span></div>
+        <div><div class="cat-name">Colocation</div><div class="cat-count">421 annonces</div></div>
+      </div>
+    </div>
+    <div class="sec-head"><div class="sec-title"><div class="sec-title-bar"></div>Annonces récentes</div><div class="see-all" onclick="goTo('apparts')">Voir tout</div></div>
+    <div class="ads-grid">
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80" alt=""><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div style="font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;margin-bottom:4px">Appartement</div><div class="ad-price">3 500 000 GNF / mois</div><div class="ad-title">3 pièces rénové — Kaloum</div><div class="ad-meta"><span>Conakry</span><span>Aujourd'hui</span></div></div></div>
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80" alt=""><div class="ad-badge badge-top">TOP</div><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div style="font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;margin-bottom:4px">Villa</div><div class="ad-price">95 000 000 GNF</div><div class="ad-title">Villa luxe avec piscine — Ratoma</div><div class="ad-meta"><span>Ratoma</span><span>Hier</span></div></div></div>
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80" alt=""><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div style="font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;margin-bottom:4px">Terrain</div><div class="ad-price">22 000 000 GNF</div><div class="ad-title">Terrain 500 m² viabilisé — Matoto</div><div class="ad-meta"><span>Matoto</span><span>3 jours</span></div></div></div>
+    </div>
+    <div style="margin-top:28px"><div class="sec-head"><div class="sec-title"><div class="sec-title-bar"></div>Recherches fréquentes</div></div><div><span class="chip" onclick="goTo('apparts')">Appartement à Kaloum</span><span class="chip" onclick="goTo('apparts')">Villa à Ratoma</span><span class="chip" onclick="goTo('apparts')">Terrain à Matoto</span><span class="chip" onclick="goTo('apparts')">Studio meublé Conakry</span><span class="chip" onclick="goTo('apparts')">Maison à Kindia</span><span class="chip" onclick="goTo('apparts')">Appartement 2 chambres</span><span class="chip" onclick="goTo('apparts')">Local commercial</span></div></div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span>© 2026 GuinéeAnnonces</span><span>Conakry, Guinée</span></div></div></footer>
+</div>
+
+<!-- PAGE APPARTS -->
+<div id="page-apparts" class="page">
+  <div class="breadcrumb"><div class="bc"><a onclick="goTo('home')">Accueil</a><span class="bc-sep">›</span><a onclick="goTo('immo')">Immobilier</a><span class="bc-sep">›</span><strong>Appartements</strong></div></div>
+  <div class="listings-layout">
+    <div class="filters">
+      <div class="filters-header"><span class="filters-title">Filtres</span><span class="filters-reset">Réinitialiser</span></div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Localisation</div>
+        <div class="filter-opt"><input type="checkbox" checked><span>Conakry</span><span class="filter-opt-count">1 542</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Kindia</span><span class="filter-opt-count">124</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Kankan</span><span class="filter-opt-count">87</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Labé</span><span class="filter-opt-count">65</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Nzérékoré</span><span class="filter-opt-count">43</span></div>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Prix (GNF / mois)</div>
+        <div class="price-row"><input type="number" placeholder="Minimum"><input type="number" placeholder="Maximum"></div>
+        <button class="filter-apply">Appliquer</button>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Chambres</div>
+        <div class="filter-opt"><input type="checkbox"><span>Studio</span></div>
+        <div class="filter-opt"><input type="checkbox" checked><span>1 chambre</span></div>
+        <div class="filter-opt"><input type="checkbox" checked><span>2 chambres</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>3 chambres</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>4+ chambres</span></div>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Type d'offre</div>
+        <div class="filter-opt"><input type="checkbox" checked><span>Location</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Vente</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Colocation</span></div>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Équipements</div>
+        <div class="filter-opt"><input type="checkbox"><span>Meublé</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Climatisation</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Parking</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Gardien</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Groupe électrogène</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="listings-head">
+        <div class="listings-count"><strong>1 842</strong> appartements trouvés</div>
+        <select class="sort-sel"><option>Plus récents</option><option>Prix croissant</option><option>Prix décroissant</option><option>Plus populaires</option></select>
+      </div>
+      <div class="ads-list">
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div><span class="list-badge badge-top">TOP</span></div>
+              <div class="list-title">Bel appartement 3 chambres — Kaloum Centre</div>
+              <div class="list-desc">Magnifique appartement entièrement rénové, cuisine équipée, 2 salles de bain, grand salon avec balcon vue mer. Sécurité 24h/24, groupe électrogène, parking inclus.</div>
+            </div>
+            <div>
+              <div class="list-price">3 500 000 GNF / mois</div>
+              <div class="list-meta">
+                <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="var(--gray-500)" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="var(--gray-500)" stroke-width="2"/></svg>Kaloum, Conakry</span>
+                <span>3 chambres</span><span>110 m²</span><span>2ème étage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div class="list-title">Studio meublé tout confort — Dixinn</div>
+              <div class="list-desc">Studio moderne avec climatisation, WiFi inclus, cuisine équipée avec réfrigérateur. Idéal pour étudiant ou professionnel. Disponible immédiatement.</div>
+            </div>
+            <div>
+              <div class="list-price">1 800 000 GNF / mois</div>
+              <div class="list-meta"><span>Dixinn, Conakry</span><span>Studio</span><span>35 m²</span><span>Meublé</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=400&q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div><span class="list-badge badge-urgent">URGENT</span></div>
+              <div class="list-title">Appartement 4 pièces avec terrasse — Ratoma</div>
+              <div class="list-desc">Grand appartement familial avec terrasse privée, vue dégagée. Quartier calme et résidentiel. Gardien, parking couvert, eau et électricité stables.</div>
+            </div>
+            <div>
+              <div class="list-price">5 200 000 GNF / mois</div>
+              <div class="list-meta"><span>Ratoma, Conakry</span><span>4 chambres</span><span>145 m²</span><span>Terrasse</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div class="list-title">Appartement 2 chambres — Matoto, proche marché</div>
+              <div class="list-desc">Appartement bien entretenu dans résidence sécurisée. 2 chambres avec placards, salon, cuisine, salle de bain. Accès facile aux transports en commun.</div>
+            </div>
+            <div>
+              <div class="list-price">2 100 000 GNF / mois</div>
+              <div class="list-meta"><span>Matoto, Conakry</span><span>2 chambres</span><span>75 m²</span><span>Sécurisé</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination"><div class="pg-btn active">1</div><div class="pg-btn">2</div><div class="pg-btn">3</div><div class="pg-btn">4</div><div class="pg-btn">›</div></div>
+    </div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span>© 2026 GuinéeAnnonces</span><span>Conakry, Guinée</span></div></div></footer>
+</div>
+
+<!-- PAGE VOITURES (hub catégorie) -->
+<div id="page-voitures" class="page">
+  <div class="breadcrumb"><div class="bc"><a onclick="goTo('home')">Accueil</a><span class="bc-sep">›</span><strong>Voitures, motos et bateaux</strong></div></div>
+  <div class="cat-hero">
+    <div class="cat-hero-inner">
+      <div class="cat-hero-title">
+        <div class="cat-hero-circle bg-yellow"><span class="cat-emoji">🚗</span></div>
+        Voitures, motos et bateaux
+      </div>
+      <div class="cat-hero-count">3 205 annonces en Guinée</div>
+      <div class="subcats">
+        <div class="subcat active" onclick="goTo('voitures-list')">Voitures</div>
+        <div class="subcat" onclick="goTo('voitures-list')">Motos &amp; Scooters</div>
+        <div class="subcat" onclick="goTo('voitures-list')">Camions &amp; Utilitaires</div>
+        <div class="subcat" onclick="goTo('voitures-list')">Pièces détachées</div>
+        <div class="subcat" onclick="goTo('voitures-list')">Bateaux</div>
+        <div class="subcat" onclick="goTo('voitures-list')">Engins agricoles</div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-head"><div class="sec-title"><div class="sec-title-bar"></div>Sous-catégories</div></div>
+    <div class="cat-grid-small" style="grid-template-columns:repeat(4,1fr);margin-bottom:32px">
+      <div class="cat-card-small" onclick="goTo('voitures-list')">
+        <div class="cat-circle bg-yellow"><span class="cat-emoji">🚗</span></div>
+        <div><div class="cat-name">Voitures</div><div class="cat-count">2 142 annonces</div></div>
+      </div>
+      <div class="cat-card-small" onclick="goTo('voitures-list')">
+        <div class="cat-circle bg-red"><span class="cat-emoji">🏍️</span></div>
+        <div><div class="cat-name">Motos &amp; Scooters</div><div class="cat-count">634 annonces</div></div>
+      </div>
+      <div class="cat-card-small" onclick="goTo('voitures-list')">
+        <div class="cat-circle bg-orange-pastel"><span class="cat-emoji">🚚</span></div>
+        <div><div class="cat-name">Camions</div><div class="cat-count">218 annonces</div></div>
+      </div>
+      <div class="cat-card-small" onclick="goTo('voitures-list')">
+        <div class="cat-circle bg-cyan"><span class="cat-emoji">⛵</span></div>
+        <div><div class="cat-name">Bateaux</div><div class="cat-count">87 annonces</div></div>
+      </div>
+    </div>
+    <div class="sec-head"><div class="sec-title"><div class="sec-title-bar"></div>Annonces récentes</div><div class="see-all" onclick="goTo('voitures-list')">Voir tout <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    <div class="ads-grid">
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&amp;q=80" alt=""><div class="ad-badge badge-top">TOP</div><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div style="font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;margin-bottom:4px">Voiture</div><div class="ad-price">401 000 000 GNF</div><div class="ad-title">Chevrolet Camaro — 2016</div><div class="ad-meta"><span>Conakry</span><span>Aujourd'hui</span></div></div></div>
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=400&amp;q=80" alt=""><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div style="font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;margin-bottom:4px">Voiture</div><div class="ad-price">892 000 000 GNF</div><div class="ad-title">BMW M4</div><div class="ad-meta"><span>Ratoma</span><span>Hier</span></div></div></div>
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=400&amp;q=80" alt=""><div class="ad-badge badge-urgent">URGENT</div><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div style="font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;margin-bottom:4px">Moto</div><div class="ad-price">72 500 000 GNF</div><div class="ad-title">SUZUKI BANDIT</div><div class="ad-meta"><span>Matoto</span><span>3 jours</span></div></div></div>
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1566473179817-c99ecd27aee9?w=400&amp;q=80" alt=""><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div style="font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;margin-bottom:4px">Camion</div><div class="ad-price">300 000 000 GNF</div><div class="ad-title">IVECO 3,5T — benne</div><div class="ad-meta"><span>Kindia</span><span>5 jours</span></div></div></div>
+    </div>
+    <div style="margin-top:28px"><div class="sec-head"><div class="sec-title"><div class="sec-title-bar"></div>Recherches fréquentes</div></div><div><span class="chip" onclick="goTo('voitures-list')">Toyota Corolla</span><span class="chip" onclick="goTo('voitures-list')">Pickup 4x4</span><span class="chip" onclick="goTo('voitures-list')">Moto 125cc</span><span class="chip" onclick="goTo('voitures-list')">Mercedes Conakry</span><span class="chip" onclick="goTo('voitures-list')">Voiture occasion</span><span class="chip" onclick="goTo('voitures-list')">Yamaha scooter</span><span class="chip" onclick="goTo('voitures-list')">Pièces Peugeot</span><span class="chip" onclick="goTo('voitures-list')">Bateau pêche</span></div></div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span>© 2026 GuinéeAnnonces</span><span>Conakry, Guinée</span></div></div></footer>
+</div>
+
+<!-- PAGE VOITURES LIST (liste avec filtres) -->
+<div id="page-voitures-list" class="page">
+  <div class="breadcrumb"><div class="bc"><a onclick="goTo('home')">Accueil</a><span class="bc-sep">›</span><a onclick="goTo('voitures')">Voitures, motos et bateaux</a><span class="bc-sep">›</span><strong>Voitures</strong></div></div>
+  <div class="listings-layout">
+    <div class="filters">
+      <div class="filters-header"><span class="filters-title">Filtres</span><span class="filters-reset">Réinitialiser</span></div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Localisation</div>
+        <div class="filter-opt"><input type="checkbox" checked><span>Conakry</span><span class="filter-opt-count">1 420</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Kindia</span><span class="filter-opt-count">186</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Kankan</span><span class="filter-opt-count">124</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Labé</span><span class="filter-opt-count">92</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Nzérékoré</span><span class="filter-opt-count">58</span></div>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Prix (GNF)</div>
+        <div class="price-row"><input type="number" placeholder="Minimum"><input type="number" placeholder="Maximum"></div>
+        <button class="filter-apply">Appliquer</button>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Marque</div>
+        <div class="filter-opt"><input type="checkbox" checked><span>Toyota</span><span class="filter-opt-count">612</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Hyundai</span><span class="filter-opt-count">284</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Nissan</span><span class="filter-opt-count">221</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Mercedes</span><span class="filter-opt-count">178</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Peugeot</span><span class="filter-opt-count">142</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Kia</span><span class="filter-opt-count">118</span></div>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Année</div>
+        <div class="price-row"><input type="number" placeholder="De"><input type="number" placeholder="À"></div>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Carburant</div>
+        <div class="filter-opt"><input type="checkbox" checked><span>Essence</span></div>
+        <div class="filter-opt"><input type="checkbox" checked><span>Diesel</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Hybride</span></div>
+        <div class="filter-opt"><input type="checkbox"><span>Électrique</span></div>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Boîte de vitesses</div>
+        <div class="filter-opt"><input type="checkbox"><span>Manuelle</span></div>
+        <div class="filter-opt"><input type="checkbox" checked><span>Automatique</span></div>
+      </div>
+      <div class="filter-sec">
+        <div class="filter-sec-title">Kilométrage</div>
+        <div class="price-row"><input type="number" placeholder="Min km"><input type="number" placeholder="Max km"></div>
+      </div>
+    </div>
+    <div>
+      <div class="listings-head">
+        <div class="listings-count"><strong>2 142</strong> voitures trouvées</div>
+        <select class="sort-sel"><option>Plus récents</option><option>Prix croissant</option><option>Prix décroissant</option><option>Kilométrage</option></select>
+      </div>
+      <div class="ads-list">
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&amp;q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div><span class="list-badge badge-top">TOP</span></div>
+              <div class="list-title">Toyota Land Cruiser V8 — 2019, 45 000 km</div>
+              <div class="list-desc">SUV haut de gamme, première main, entretien complet chez concessionnaire. Cuir, GPS, caméra de recul, toit ouvrant. Climatisation 4 zones, jantes alu 20".</div>
+            </div>
+            <div>
+              <div class="list-price">185 000 000 GNF</div>
+              <div class="list-meta">
+                <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="var(--gray-500)" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="var(--gray-500)" stroke-width="2"/></svg>Kaloum, Conakry</span>
+                <span>Diesel</span><span>Automatique</span><span>45 000 km</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=400&amp;q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div class="list-title">Toyota Corolla 2015 — essence, très bon état</div>
+              <div class="list-desc">Berline fiable et économique, entretien régulier, pneus neufs. Climatisation, direction assistée, vitres électriques. Idéale ville et longs trajets.</div>
+            </div>
+            <div>
+              <div class="list-price">42 000 000 GNF</div>
+              <div class="list-meta"><span>Ratoma, Conakry</span><span>Essence</span><span>Manuelle</span><span>98 000 km</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=400&amp;q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div><span class="list-badge badge-urgent">URGENT</span></div>
+              <div class="list-title">Hyundai Tucson 2018 — 4x4, full options</div>
+              <div class="list-desc">SUV compact, très bien entretenu. GPS, caméra recul, sièges chauffants, Bluetooth. Pneus récents, vidange à jour. Vente pour départ à l'étranger.</div>
+            </div>
+            <div>
+              <div class="list-price">78 000 000 GNF</div>
+              <div class="list-meta"><span>Dixinn, Conakry</span><span>Diesel</span><span>Automatique</span><span>72 000 km</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=400&amp;q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div class="list-title">Yamaha YBR 125 — 2022, faible kilométrage</div>
+              <div class="list-desc">Moto économique et fiable, parfaite pour la ville. Entretien suivi, papiers en règle, 2 casques inclus. Peu roulé, toujours garée au garage.</div>
+            </div>
+            <div>
+              <div class="list-price">8 500 000 GNF</div>
+              <div class="list-meta"><span>Matoto, Conakry</span><span>Essence</span><span>Manuelle</span><span>6 200 km</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1566473179817-c99ecd27aee9?w=400&amp;q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div class="list-title">Mitsubishi Canter 3,5T — benne basculante</div>
+              <div class="list-desc">Camion utilitaire, benne hydraulique en parfait état. Idéal chantier ou transport de matériaux. Moteur révisé, embrayage neuf, 4 pneus neufs.</div>
+            </div>
+            <div>
+              <div class="list-price">72 000 000 GNF</div>
+              <div class="list-meta"><span>Kindia</span><span>Diesel</span><span>Manuelle</span><span>186 000 km</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card" onclick="goTo('annonce')">
+          <img class="list-img" src="https://images.unsplash.com/photo-1606611013016-969c19ba27bb?w=400&amp;q=80" alt="">
+          <div class="list-body">
+            <div>
+              <div class="list-title">Mercedes Classe C 220d — 2017, cuir</div>
+              <div class="list-desc">Berline premium, intérieur cuir, écran tactile, assistants de conduite. Entretien Mercedes à jour, carnet complet. Très élégante, conduite souple.</div>
+            </div>
+            <div>
+              <div class="list-price">125 000 000 GNF</div>
+              <div class="list-meta"><span>Kaloum, Conakry</span><span>Diesel</span><span>Automatique</span><span>88 000 km</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination"><div class="pg-btn active">1</div><div class="pg-btn">2</div><div class="pg-btn">3</div><div class="pg-btn">4</div><div class="pg-btn">›</div></div>
+    </div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span>© 2026 GuinéeAnnonces</span><span>Conakry, Guinée</span></div></div></footer>
+</div>
+
+<!-- PAGE ANNONCE -->
+<div id="page-annonce" class="page">
+  <div class="breadcrumb"><div class="bc"><a onclick="goTo('home')">Accueil</a><span class="bc-sep">›</span><a onclick="goTo('immo')">Immobilier</a><span class="bc-sep">›</span><a onclick="goTo('apparts')">Appartements</a><span class="bc-sep">›</span><strong>Appartement 3 chambres — Kaloum</strong></div></div>
+  <div class="detail-layout">
+    <div>
+      <div class="gallery">
+        <img class="gallery-main" id="mainPhoto" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=85" alt="">
+        <div class="gallery-thumbs">
+          <img class="g-thumb active" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=200&q=80" onclick="changePhoto(this,'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=85')" alt="">
+          <img class="g-thumb" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=200&q=80" onclick="changePhoto(this,'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=900&q=85')" alt="">
+          <img class="g-thumb" src="https://images.unsplash.com/photo-1606787620819-8bdf0c44c293?w=200&q=80" onclick="changePhoto(this,'https://images.unsplash.com/photo-1606787620819-8bdf0c44c293?w=900&q=85')" alt="">
+          <img class="g-thumb" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=200&q=80" onclick="changePhoto(this,'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=900&q=85')" alt="">
+          <img class="g-thumb" src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=200&q=80" onclick="changePhoto(this,'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=900&q=85')" alt="">
+        </div>
+      </div>
+      <div class="detail-card">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+          <div>
+            <div class="detail-price">3 500 000 GNF <span class="detail-price-sub">/ mois</span></div>
+            <div class="detail-title">Bel appartement 3 chambres — Kaloum Centre, Conakry</div>
+          </div>
+          <div style="cursor:pointer;flex-shrink:0;margin-top:4px" onclick="toggleFav(this)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-300)" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="detail-meta">
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="var(--gray-500)" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="var(--gray-500)" stroke-width="2"/></svg>Kaloum, Conakry</span>
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--gray-500)" stroke-width="1.8"/><polyline points="12 6 12 12 16 14" stroke="var(--gray-500)" stroke-width="1.8" stroke-linecap="round"/></svg>Publié aujourd'hui à 09h14</span>
+          <span>247 vues</span>
+          <span>Réf. GN-2024-18473</span>
+        </div>
+        <div class="detail-sec-title">Caractéristiques</div>
+        <div class="features">
+          <div class="feature"><span class="feature-label">Type</span><span class="feature-val">Appartement</span></div>
+          <div class="feature"><span class="feature-label">Offre</span><span class="feature-val">Location</span></div>
+          <div class="feature"><span class="feature-label">Surface</span><span class="feature-val">110 m²</span></div>
+          <div class="feature"><span class="feature-label">Chambres</span><span class="feature-val">3</span></div>
+          <div class="feature"><span class="feature-label">Salles de bain</span><span class="feature-val">2</span></div>
+          <div class="feature"><span class="feature-label">Étage</span><span class="feature-val">2 / 4</span></div>
+          <div class="feature"><span class="feature-label">Meublé</span><span class="feature-val">Oui</span></div>
+          <div class="feature"><span class="feature-label">Parking</span><span class="feature-val">1 place</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="detail-sec-title">Description</div>
+        <div class="desc-text">Magnifique appartement entièrement rénové en 2023, au cœur du quartier Kaloum, à 5 minutes du bord de mer. Grand séjour lumineux avec balcon, cuisine entièrement équipée (réfrigérateur, cuisinière, micro-ondes), 3 chambres spacieuses avec placards intégrés, 2 salles de bain modernes.<br><br>Résidence sécurisée 24h/24, groupe électrogène, réservoir d'eau, parking couvert inclus dans le loyer.<br><br>Loyer : 3 500 000 GNF/mois + caution 2 mois. Charges non incluses. Disponible immédiatement. Sérieux uniquement.</div>
+        <div class="divider"></div>
+        <div class="detail-sec-title">Équipements</div>
+        <div class="equip-tags">
+          <div class="equip-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Climatisation</div>
+          <div class="equip-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Groupe électrogène</div>
+          <div class="equip-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Eau courante</div>
+          <div class="equip-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>WiFi disponible</div>
+          <div class="equip-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gardien 24h</div>
+          <div class="equip-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Parking couvert</div>
+          <div class="equip-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Balcon</div>
+          <div class="equip-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Meublé</div>
+        </div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-sec-title">Localisation</div>
+        <p style="font-size:14px;color:var(--gray-600);margin-bottom:12px">Kaloum, Conakry — Quartier administratif et commercial, proche de la mer</p>
+        <div class="map-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="var(--gray-400)" stroke-width="1.5"/><circle cx="12" cy="10" r="3" stroke="var(--gray-400)" stroke-width="1.5"/></svg>
+          <div style="font-weight:600;color:var(--gray-700);font-size:14px">Kaloum, Conakry</div>
+          <div style="font-size:12px;color:var(--gray-500)">Carte interactive disponible</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="seller-card">
+        <div class="seller-price-big">3 500 000 GNF</div>
+        <div class="seller-price-note">par mois · charges non incluses</div>
+        <button class="btn-call"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Afficher le numéro</button>
+        <button class="btn-msg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="var(--purple)" stroke-width="2"/><polyline points="22,6 12,13 2,6" stroke="var(--purple)" stroke-width="2" stroke-linejoin="round"/></svg>Envoyer un message</button>
+        <div class="divider"></div>
+        <div class="seller-info">
+          <img class="seller-av" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="">
+          <div><div class="seller-name">Mamadou Diallo</div><div class="seller-since">Membre depuis jan. 2024</div><div class="seller-rating">★★★★★ 4.9 · 18 avis</div></div>
+        </div>
+        <div class="seller-stats">
+          <div class="seller-stat-row"><span class="seller-stat-label">Annonces actives</span><span class="seller-stat-val">7</span></div>
+          <div class="seller-stat-row"><span class="seller-stat-label">Taux de réponse</span><span class="seller-stat-val green">94%</span></div>
+          <div class="seller-stat-row"><span class="seller-stat-label">Délai moyen</span><span class="seller-stat-val">Moins d'1 heure</span></div>
+        </div>
+        <button class="btn-profile">Voir toutes ses annonces</button>
+        <div class="safety">
+          <div class="safety-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#f57c00" stroke-width="2"/></svg>Conseils de sécurité</div>
+          <div class="safety-text">Ne payez jamais d'avance sans avoir visité le bien. Rencontrez le propriétaire en personne avant de signer quoi que ce soit.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="padding-top:0">
+    <div class="sec-head"><div class="sec-title"><div class="sec-title-bar"></div>Annonces similaires</div><div class="see-all" onclick="goTo('apparts')">Voir tout</div></div>
+    <div class="ads-grid">
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?w=400&q=80" alt=""><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div class="ad-price">4 800 000 GNF/mois</div><div class="ad-title">Appartement 4 pièces terrasse — Ratoma</div><div class="ad-meta"><span>Ratoma</span><span>2 jours</span></div></div></div>
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&q=80" alt=""><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div class="ad-price">2 100 000 GNF/mois</div><div class="ad-title">Appartement 2 chambres — Matoto</div><div class="ad-meta"><span>Matoto</span><span>3 jours</span></div></div></div>
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&q=80" alt=""><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div class="ad-price">1 800 000 GNF/mois</div><div class="ad-title">Studio meublé — Dixinn</div><div class="ad-meta"><span>Dixinn</span><span>Hier</span></div></div></div>
+      <div class="ad-card" onclick="goTo('annonce')"><div class="ad-img-wrap"><img class="ad-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80" alt=""><div class="ad-badge badge-top">TOP</div><div class="ad-fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="var(--gray-500)" stroke-width="1.8"/></svg></div></div><div class="ad-body"><div class="ad-price">6 500 000 GNF/mois</div><div class="ad-title">Penthouse 5 pièces vue mer — Kaloum</div><div class="ad-meta"><span>Kaloum</span><span>Aujourd'hui</span></div></div></div>
+    </div>
+  </div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span>© 2026 GuinéeAnnonces</span><span>Conakry, Guinée</span></div></div></footer>
+</div>
+
+<!-- PAGE POST -->
+<div id="page-post" class="page">
+  <div class="post-header">
+    <div class="post-header-inner">
+      <div class="post-title">Déposer une annonce</div>
+      <div class="post-subtitle">Publiez votre annonce en quelques minutes et touchez des milliers d'acheteurs en Guinée</div>
+      <div class="steps-bar">
+        <div class="step-item"><div class="step-circle active" id="sc1">1</div><div class="step-label active" id="sl1">Catégorie</div></div>
+        <div class="step-line" id="line1"></div>
+        <div class="step-item"><div class="step-circle inactive" id="sc2">2</div><div class="step-label inactive" id="sl2">Détails</div></div>
+        <div class="step-line" id="line2"></div>
+        <div class="step-item"><div class="step-circle inactive" id="sc3">3</div><div class="step-label inactive" id="sl3">Photos</div></div>
+        <div class="step-line" id="line3"></div>
+        <div class="step-item"><div class="step-circle inactive" id="sc4">4</div><div class="step-label inactive" id="sl4">Contact & Publication</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="post-body">
+    <div class="post-step active" id="step1">
+      <div style="margin-bottom:24px">
+        <div style="font-size:18px;font-weight:700;margin-bottom:6px">Choisissez une catégorie</div>
+        <div style="font-size:14px;color:var(--gray-500)">Sélectionnez la catégorie qui correspond le mieux à votre annonce</div>
+      </div>
+      <div class="cat-select-grid">
+        <div class="cat-select-item" onclick="selectCat(this,'Voitures & Véhicules')">
+          <div class="cat-select-circle bg-yellow"><span class="cat-emoji">🚗</span></div>
+          <div><div class="cat-select-name">Voitures & Véhicules</div><div class="cat-select-count">3 205 annonces</div></div>
+        </div>
+        <div class="cat-select-item" onclick="selectCat(this,'Immobilier')">
+          <div class="cat-select-circle bg-blue"><span class="cat-emoji">🔑</span></div>
+          <div><div class="cat-select-name">Immobilier</div><div class="cat-select-count">4 821 annonces</div></div>
+        </div>
+        <div class="cat-select-item" onclick="selectCat(this,'Téléphones & Tablettes')">
+          <div class="cat-select-circle bg-cream"><span class="cat-emoji">📱</span></div>
+          <div><div class="cat-select-name">Téléphones & Tablettes</div><div class="cat-select-count">6 448 annonces</div></div>
+        </div>
+        <div class="cat-select-item" onclick="selectCat(this,'Mode')">
+          <div class="cat-select-circle bg-yellow"><span class="cat-emoji">👗</span></div>
+          <div><div class="cat-select-name">Mode</div><div class="cat-select-count">2 910 annonces</div></div>
+        </div>
+        <div class="cat-select-item" onclick="selectCat(this,'Maison & Jardin')">
+          <div class="cat-select-circle bg-navy"><span class="cat-emoji">🛋️</span></div>
+          <div><div class="cat-select-name">Maison & Jardin</div><div class="cat-select-count">1 783 annonces</div></div>
+        </div>
+        <div class="cat-select-item" onclick="selectCat(this,'Emploi')">
+          <div class="cat-select-circle bg-pink"><span class="cat-emoji">💼</span></div>
+          <div><div class="cat-select-name">Emploi</div><div class="cat-select-count">1 240 annonces</div></div>
+        </div>
+      </div>
+      <div id="subcatWrap" style="display:none;margin-top:24px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:12px;color:var(--gray-800)">Sélectionnez une sous-catégorie</div>
+        <div class="subcats-select" id="subcatList"></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-back" onclick="goTo('home')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="var(--gray-700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Retour</button>
+        <button class="btn-next" onclick="nextStep(2)">Continuer <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+
+    <div class="post-step" id="step2">
+      <div id="selectedCatDisplay" class="subcat-selected-display" style="display:none">
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="var(--purple)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="selectedCatText"></span></span>
+        <button onclick="nextStep(1)">Modifier</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Titre de l'annonce <span>*</span></label>
+        <input class="form-input" type="text" placeholder="Ex: Appartement 3 chambres, climatisé, Kaloum">
+        <div class="form-hint">Soyez précis et descriptif pour attirer plus d'acheteurs</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description <span>*</span></label>
+        <textarea class="form-textarea" placeholder="Décrivez votre bien en détail : état, équipements, avantages, conditions..." id="adDesc"></textarea>
+        <div class="char-count" id="charCount">0 / 2000 caractères</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Prix <span>*</span></label>
+          <div class="price-wrap"><div class="price-currency">GNF</div><input class="price-input" type="number" placeholder="Ex: 3500000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Type de prix</label>
+          <select class="form-select"><option>Prix fixe</option><option>Par mois (location)</option><option>Prix négociable</option><option>Prix à discuter</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Région <span>*</span></label>
+          <select class="form-select"><option value="">Choisir une région...</option><option>Conakry</option><option>Kindia</option><option>Boké</option><option>Mamou</option><option>Kankan</option><option>Faranah</option><option>Labé</option><option>Nzérékoré</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Commune / Quartier</label>
+          <input class="form-input" type="text" placeholder="Ex: Kaloum, Ratoma, Matoto...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">État du bien</label>
+        <div class="condition-options">
+          <div class="condition-opt selected" onclick="selectCondition(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neuf</div>
+          <div class="condition-opt" onclick="selectCondition(this)">Très bon état</div>
+          <div class="condition-opt" onclick="selectCondition(this)">Bon état</div>
+          <div class="condition-opt" onclick="selectCondition(this)">État correct</div>
+          <div class="condition-opt" onclick="selectCondition(this)">À rénover</div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-back" onclick="nextStep(1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="var(--gray-700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Retour</button>
+        <button class="btn-next" onclick="nextStep(3)">Continuer <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+
+    <div class="post-step" id="step3">
+      <div style="margin-bottom:22px">
+        <div style="font-size:18px;font-weight:700;margin-bottom:6px">Ajoutez des photos</div>
+        <div style="font-size:14px;color:var(--gray-500)">Les annonces avec photos reçoivent 5× plus de contacts. Ajoutez jusqu'à 12 photos.</div>
+      </div>
+      <div class="photo-upload-area" onclick="simulateUpload()">
+        <div class="upload-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="var(--gray-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="17 8 12 3 7 8" stroke="var(--gray-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="3" x2="12" y2="15" stroke="var(--gray-500)" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="upload-title">Cliquez pour ajouter des photos</div>
+        <div class="upload-sub">JPG, PNG jusqu'à 10 Mo par photo · Maximum 12 photos</div>
+      </div>
+      <div class="photos-preview">
+        <div class="photo-preview-item"><img class="photo-preview-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=200&q=80" alt=""><div class="photo-main-badge">Principale</div><div class="photo-preview-remove"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div></div>
+        <div class="photo-preview-item"><img class="photo-preview-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=200&q=80" alt=""><div class="photo-preview-remove"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div></div>
+        <div class="photo-preview-item"><img class="photo-preview-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&q=80" alt=""><div class="photo-preview-remove"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div></div>
+        <div class="photo-add-btn" onclick="simulateUpload()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="var(--gray-400)" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>Ajouter</span>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--gray-500)">La première photo sera la photo principale de l'annonce. Vous pouvez faire glisser les photos pour changer leur ordre.</div>
+      <div class="form-actions">
+        <button class="btn-back" onclick="nextStep(2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="var(--gray-700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Retour</button>
+        <button class="btn-next" onclick="nextStep(4)">Continuer <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+
+    <div class="post-step" id="step4">
+      <div style="font-size:18px;font-weight:700;margin-bottom:20px">Contact & Publication</div>
+      <div class="contact-card">
+        <div class="contact-card-title">Vos informations de contact</div>
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Prénom et nom <span>*</span></label>
+            <input class="form-input" type="text" placeholder="Ex: Mamadou Diallo">
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Numéro de téléphone <span>*</span></label>
+            <input class="form-input" type="tel" placeholder="Ex: 622 000 000">
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:16px;margin-bottom:0">
+          <label class="form-label">Email (optionnel)</label>
+          <input class="form-input" type="email" placeholder="votre@email.com">
+          <div class="form-hint">Votre email ne sera pas affiché publiquement</div>
+        </div>
+      </div>
+      <div style="margin-bottom:22px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px">Aperçu de votre annonce</div>
+        <div class="review-grid">
+          <img class="review-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80" alt="">
+          <div>
+            <div class="review-title">Bel appartement 3 chambres — Kaloum Centre</div>
+            <div class="review-price">3 500 000 GNF / mois</div>
+            <div class="review-meta">
+              <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="var(--gray-500)" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="var(--gray-500)" stroke-width="2"/></svg>Kaloum, Conakry</span>
+              <span>Immobilier · Appartements</span>
+              <span>3 photos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:22px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:14px">Choisissez votre offre de publication</div>
+        <div class="plan-cards">
+          <div class="plan-card selected">
+            <div class="plan-name">Gratuit</div>
+            <div class="plan-price">0 GNF <span>/ annonce</span></div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Publication standard</div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Visible 30 jours</div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>6 photos max</div>
+          </div>
+          <div class="plan-card recommended">
+            <div class="plan-badge">Populaire</div>
+            <div class="plan-name">Mis en avant</div>
+            <div class="plan-price">50 000 GNF <span>/ annonce</span></div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Position prioritaire</div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Visible 60 jours</div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>12 photos · Badge TOP</div>
+          </div>
+          <div class="plan-card">
+            <div class="plan-name">Premium</div>
+            <div class="plan-price">120 000 GNF <span>/ annonce</span></div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Page d'accueil + catégorie</div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Visible 90 jours</div>
+            <div class="plan-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Statistiques détaillées</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--gray-50);border:var(--border);border-radius:var(--radius);padding:16px;margin-bottom:20px;font-size:13px;color:var(--gray-600);line-height:1.6">
+        En cliquant sur "Publier mon annonce", vous acceptez les <span style="color:var(--purple);cursor:pointer">Conditions Générales d'Utilisation</span> et la <span style="color:var(--purple);cursor:pointer">Politique de Confidentialité</span> de GuinéeAnnonces. Votre annonce sera soumise à modération avant publication (délai max. 24h).
+      </div>
+      <div class="form-actions">
+        <button class="btn-back" onclick="nextStep(3)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="var(--gray-700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Retour</button>
+        <button class="btn-publish" onclick="nextStep(5)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Publier mon annonce</button>
+      </div>
+    </div>
+
+    <div class="post-step" id="step5">
+      <div class="success-wrap">
+        <div class="success-icon">
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#2e7d32" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="#2e7d32" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="success-title">Annonce soumise avec succès !</div>
+        <div class="success-sub">Votre annonce est en cours de modération. Elle sera publiée dans un délai maximum de 24 heures après validation par notre équipe. Vous recevrez une notification par SMS et email.</div>
+        <div class="success-ref">Référence de votre annonce : <strong>GN-2026-29841</strong></div>
+        <div class="success-actions">
+          <button class="btn-green" onclick="goTo('home')">Retour à l'accueil</button>
+          <button class="btn-purple-outline" onclick="nextStep(1)">Déposer une nouvelle annonce</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span>© 2026 GuinéeAnnonces</span><span>Conakry, Guinée</span></div></div></footer>
+</div>
+
+<script>
+var subcatMap={'Immobilier':['Appartements','Villas & Maisons','Terrains & Parcelles','Colocation','Locaux commerciaux','Bureaux','Entrepôts'],'Voitures & Véhicules':['Voitures','Motos & Scooters','Camions & Utilitaires','Pièces détachées','Bateaux','Engins agricoles'],'Téléphones & Tablettes':['Smartphones','Tablettes','Accessoires','Smartwatches'],'Mode':['Vêtements femme','Vêtements homme','Chaussures','Sacs & Maroquinerie','Bijoux & Montres','Cosmétiques'],'Maison & Jardin':['Meubles','Électroménager','Décoration','Literie','Jardinage','Bricolage'],'Emploi':['Offres d\'emploi','Recherche d\'emploi','Stages','Formations']};
+var selectedCat='';var currentStep=1;
+function goTo(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function changePhoto(t,s){document.getElementById('mainPhoto').src=s;document.querySelectorAll('.g-thumb').forEach(x=>x.classList.remove('active'));t.classList.add('active');}
+function toggleFav(btn){btn.innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" fill="var(--purple)" stroke="var(--purple)" stroke-width="2"/></svg>';}
+function selectCat(el,cat){document.querySelectorAll('.cat-select-item').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');selectedCat=cat;var wrap=document.getElementById('subcatWrap');var list=document.getElementById('subcatList');list.innerHTML='';(subcatMap[cat]||[]).forEach(function(sub){var d=document.createElement('div');d.className='subcat-select-item';d.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="var(--gray-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+sub;d.onclick=function(){document.querySelectorAll('.subcat-select-item').forEach(x=>{x.style.borderColor='';x.style.color='';x.style.background=''});this.style.borderColor='var(--purple)';this.style.color='var(--purple)';this.style.background='var(--purple-light)';};list.appendChild(d);});wrap.style.display='block';}
+function nextStep(n){currentStep=n;for(var i=1;i<=5;i++){var step=document.getElementById('step'+i);if(step){step.className='post-step'+(i===n?' active':'');}var sc=document.getElementById('sc'+i);var sl=document.getElementById('sl'+i);if(sc&&sl&&i<=4){if(i<n){sc.className='step-circle done';sc.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';sl.className='step-label done';}else if(i===n){sc.className='step-circle active';sc.textContent=i;sl.className='step-label active';}else{sc.className='step-circle inactive';sc.textContent=i;sl.className='step-label inactive';}}var line=document.getElementById('line'+i);if(line){line.className='step-line'+(i<n?' done':'');}}if(n>=2){var disp=document.getElementById('selectedCatDisplay');if(disp){disp.style.display=selectedCat?'flex':'none';var txt=document.getElementById('selectedCatText');if(txt)txt.textContent=selectedCat;}}window.scrollTo({top:0,behavior:'smooth'});}
+function selectCondition(el){document.querySelectorAll('.condition-opt').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');}
+document.getElementById('adDesc')&&document.getElementById('adDesc').addEventListener('input',function(){document.getElementById('charCount').textContent=this.value.length+' / 2000 caractères';});
+function simulateUpload(){alert('Dans la version finale : sélection de fichiers depuis votre appareil ou galerie photo.');}
+</script>
+</body>
+</html>
